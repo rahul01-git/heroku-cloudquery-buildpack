@@ -1,10 +1,3 @@
-#!/bin/sh
-
-if [ -f "$1/hubspot-sync-contacts.yml" ] || \
-   [ -f "$1/postgresql.yml" ]; then
-  echo "CloudQuery"
-  exit 0
-else
-  echo "No compatible files found"
-  exit 1
-fi
+#!/usr/bin/env bash
+echo "cloudquery-buildpack"
+exit 0

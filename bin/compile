@@ -1,21 +1,25 @@
-#!/bin/sh
+#!/usr/bin/env bash
+set -e
 
 BUILD_DIR=$1
 CACHE_DIR=$2
+ENV_DIR=$3
 
 CLOUDQUERY_VERSION="6.4.2"
 CLOUDQUERY_URL="https://github.com/cloudquery/cloudquery/releases/download/cli-v${CLOUDQUERY_VERSION}/cloudquery_linux_amd64"
 
+echo "-----> Installing CloudQuery CLI"
 mkdir -p $BUILD_DIR/src/core/config/cloudquery
-
-TEMP_FILE="$CACHE_DIR/cloudquery_download"
-
-echo "-----> Downloading CloudQuery CLI"
-curl -L -o $TEMP_FILE $CLOUDQUERY_URL
-
-echo "-----> Renaming and moving CloudQuery CLI"
-mv $TEMP_FILE $BUILD_DIR/src/core/config/cloudquery/cloudquery
-
+curl -L -o $BUILD_DIR/src/core/config/cloudquery/cloudquery_linux_amd64 ${CLOUDQUERY_URL}
+mv $BUILD_DIR/src/core/config/cloudquery/cloudquery_linux_amd64 $BUILD_DIR/src/core/config/cloudquery/cloudquery
 chmod +x $BUILD_DIR/src/core/config/cloudquery/cloudquery
+
+echo "-----> Verifying CloudQuery CLI installation"
+if [ -x "$BUILD_DIR/src/core/config/cloudquery/cloudquery" ]; then
+    echo "-----> CloudQuery CLI is installed and executable"
+else
+    echo "-----> CloudQuery CLI installation failed" >&2
+    exit 1
+fi
 
 echo "-----> CloudQuery CLI installed successfully"
