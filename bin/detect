@@ -5,5 +5,7 @@ if [ -f "$1/hubspot-sync-contacts.yml" ] || \
   echo "CloudQuery"
   exit 0
 else
+else
+  echo "No compatible files found"
   exit 1
 fi
